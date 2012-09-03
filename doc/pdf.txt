@@ -1,0 +1,131 @@
+*pdf.txt*
+
+Author : rhysd <lin90162@yahoo.co.jp>
+
+CONTENTS          *pdf.vim-contents*
+
+Introduction      |pdf.vim-introduction|
+Usage             |pdf.vim-usage|
+Install           |pdf.vim-install|
+Dependency        |pdf.vim-dependency|
+Commands          |pdf.vim-commands|
+Variables         |pdf.vim-variables|
+Setup Example     |pdf.vim-setup-example|
+License           |pdf.vim-license|
+
+==============================================================================
+INTRODUCTION                                            *pdf.vim-introduction*
+
+*pdf.vim* is plugin to open pdf files in vim. This plugin enables to access
+pdf files and yank in the files quickly. Conversion from pdf to txt takes
+seconds, however, the conversion only occurs at first time because this plugin
+cache txt files. If you use |unite.vim|, you can access the cache files using
+unite interface.
+
+==============================================================================
+USAGE                                                          *pdf.vim-usage*
+
+  Open pdf file with a Pdf command.
+>
+  :Pdf path/to/hoge.pdf
+<
+
+  If something goes wrong, you can remove cache.
+>
+  :PdfCacheClean
+<
+
+  Select cache with |unite.vim| interface.
+>
+  :Unite pdf
+<
+
+==============================================================================
+INSTALL                                                      *pdf.vim-install*
+
+Install the distributed files into Vim script directory which is usually
+~/.vim/, or $HOME/vimfiles on Windows.
+
+If you use |vundle|,
+>
+  :Bundle 'rhysd/pdf.vim'
+<
+
+If you use |neobundle.vim|,
+>
+  :NeoBundle 'rhysd/pdf.vim'
+<
+
+==============================================================================
+DEPENDENCY                                                *pdf.vim-dependency*
+
+Conversion from pdf to txt depends on |pdftotext| command. This is one of the
+commands in poppler package. 
+
+|unite.vim| is required to show list of cache files.
+
+==============================================================================
+COMMANDS                                                    *pdf.vim-commands*
+
+:Pdf {path}                            *:Pdf*
+    Convert pdf file to txt file and open it. If {file} is opened at first
+    time, this plugin convert it with |pdftotext| and cache. {path} must be
+    string of path to the pdf file and the extension must be '.pdf'.
+
+:PdfCacheClean [{file}]                *:PdfCacheClean*
+    Remove cache file from |g:pdf_cache_dir|.{file} is the pdf name, pdf path
+    or cache-name of the pdf file to remove. If {file} omitted, all cache
+    files have been removed.
+
+==============================================================================
+VARIABLES                                                  *pdf.vim-variables*
+
+g:pdf_cache_dir
+    String of a path to cache directory which |pdf.vim| uses. If this
+    directory doesn't exist, the directory is made with |mkdir|.
+
+    The default value is $HOME.'/vim-pdf.cache'
+
+g:pdf_open_cmd
+    String of a command to open converted files.
+
+    The default value is 'vsplit | view'
+
+==============================================================================
+SETUP EXAMPLE                                          *pdf.vim-setup-example*
+
+Write your favorite setting in your vimrc.
+
+Example:
+>
+  let g:pdf_cache_dir = $HOME.'/.cache/pdf'
+  let g:pdf_open_cmd = 'split | edit'
+<
+
+==============================================================================
+LICENSE                                                      *pdf.vim-license*
+
+|pdf.vim| is distributed under MIT license.
+
+  Copyright (c) 2012 rhysd
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
