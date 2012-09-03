@@ -1,6 +1,4 @@
-if !executable('pdftotext')
-    finish
-endif
+scriptencoding utf-8
 
 let g:pdf_cache_dir = get(g:, 'pdf_cache_dir', $HOME . "/.vim-pdf.cache")
 let g:pdf_open_cmd = get(g:, 'pdf_open_cmd', 'vsplit | view')
@@ -31,6 +29,11 @@ function! s:open_pdf(path)
 
     " get cache name
     let cache = g:pdf_cache_dir.'/'.fnamemodify(a:path,':t:r').'.txt'
+
+    if !executable('pdftotext')
+        echoerr "`pdftotext` command is required!"
+        finish
+    endif
 
     " convert pdf and cache it
     if !filereadable(cache)
