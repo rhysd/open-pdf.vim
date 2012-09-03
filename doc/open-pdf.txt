@@ -32,7 +32,7 @@ USAGE                                                     *open-pdf.vim-usage*
 
   If something goes wrong, you can remove cache.
 >
-  :PdfCacheClean
+  :PdfClean
 <
 
   Select cache with |unite.vim| interface.
@@ -72,7 +72,7 @@ COMMANDS                                               *open-pdf.vim-commands*
     time, this plugin convert it with |pdftotext| and cache. {path} must be
     string of path to the pdf file and the extension must be '.pdf'.
 
-:PdfCacheClean [{file}]                *:PdfCacheClean*
+:PdfClean [{file}]                     *:PdfClean*
     Remove cache file from |g:pdf_cache_dir|.{file} is the pdf name, pdf path
     or cache-name of the pdf file to remove. If {file} omitted, all cache
     files have been removed.
@@ -84,7 +84,7 @@ g:pdf_cache_dir
     String of a path to cache directory which |open-pdf.vim| uses. If this
     directory doesn't exist, the directory is made with |mkdir|.
 
-    The default value is $HOME.'/vim-pdf.cache'
+    The default value is $HOME.'/.open-pdf.vim.cache'
 
 g:pdf_open_cmd
     String of a command to open converted files.

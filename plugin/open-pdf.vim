@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-let g:pdf_cache_dir = get(g:, 'pdf_cache_dir', $HOME . "/.vim-pdf.cache")
+let g:pdf_cache_dir = get(g:, 'pdf_cache_dir', $HOME . "/.open-pdf.vim.cache")
 let g:pdf_open_cmd = get(g:, 'pdf_open_cmd', 'vsplit | view')
 
 if !isdirectory(g:pdf_cache_dir)
@@ -72,4 +72,4 @@ endfunction
 "}}}
 
 command! -complete=file -nargs=1 Pdf call <SID>open_pdf(<q-args>)
-command! -complete=file -nargs=? PdfCacheClean call <SID>clean_cache(<q-args>)
+command! -complete=file -nargs=? PdfClean call <SID>clean_cache(<q-args>)
