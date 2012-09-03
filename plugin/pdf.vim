@@ -9,6 +9,19 @@ if !isdirectory(g:pdf_cache_dir)
     call mkdir(g:pdf_cache_dir, 'p')
 endif
 
+function! s:has_vimproc()
+    if !exists('s:exists_vimproc')
+        try
+            call vimproc#version()
+            let s:exists_vimproc = 1
+        catch
+            let s:exists_vimproc = 0
+        endtry
+    endif
+    return s:exists_vimproc
+endfunction
+
+
 function! s:open_pdf(path)
     " check extension
     if a:path !~ '\.pdf$'
@@ -21,7 +34,11 @@ function! s:open_pdf(path)
 
     " convert pdf and cache it
     if !filereadable(cache)
-        call vimproc#system('pdftotext -layout -nopgbrk '.a:path.' - > '.cache)
+        if s:has_vimproc()
+            call vimproc#system('pdftotext -layout -nopgbrk '.a:path.' - > '.cache)
+        else
+            call system('pdftotext -layout -nopgbrk '.a:path.' - > '.cache)
+        endif
     endif
 
     " open cache file
