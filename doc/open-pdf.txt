@@ -1,29 +1,29 @@
-*pdf.txt*
+*open-pdf.txt*
 
 Author : rhysd <lin90162@yahoo.co.jp>
 
-CONTENTS          *pdf.vim-contents*
+CONTENTS          *open-pdf.vim-contents*
 
-Introduction      |pdf.vim-introduction|
-Usage             |pdf.vim-usage|
-Install           |pdf.vim-install|
-Dependency        |pdf.vim-dependency|
-Commands          |pdf.vim-commands|
-Variables         |pdf.vim-variables|
-Setup Example     |pdf.vim-setup-example|
-License           |pdf.vim-license|
+Introduction      |open-pdf.vim-introduction|
+Usage             |open-pdf.vim-usage|
+Install           |open-pdf.vim-install|
+Dependency        |open-pdf.vim-dependency|
+Commands          |open-pdf.vim-commands|
+Variables         |open-pdf.vim-variables|
+Setup Example     |open-pdf.vim-setup-example|
+License           |open-pdf.vim-license|
 
 ==============================================================================
-INTRODUCTION                                            *pdf.vim-introduction*
+INTRODUCTION                                       *open-pdf.vim-introduction*
 
-*pdf.vim* is plugin to open pdf files in vim. This plugin enables to access
+*open-pdf.vim* is plugin to open pdf files in vim. This plugin enables to access
 pdf files and yank in the files quickly. Conversion from pdf to txt takes
 seconds, however, the conversion only occurs at first time because this plugin
 cache txt files. If you use |unite.vim|, you can access the cache files using
 unite interface.
 
 ==============================================================================
-USAGE                                                          *pdf.vim-usage*
+USAGE                                                     *open-pdf.vim-usage*
 
   Open pdf file with a Pdf command.
 >
@@ -41,23 +41,23 @@ USAGE                                                          *pdf.vim-usage*
 <
 
 ==============================================================================
-INSTALL                                                      *pdf.vim-install*
+INSTALL                                                 *open-pdf.vim-install*
 
 Install the distributed files into Vim script directory which is usually
 ~/.vim/, or $HOME/vimfiles on Windows.
 
 If you use |vundle|,
 >
-  :Bundle 'rhysd/pdf.vim'
+  :Bundle 'rhysd/open-pdf.vim'
 <
 
 If you use |neobundle.vim|,
 >
-  :NeoBundle 'rhysd/pdf.vim'
+  :NeoBundle 'rhysd/open-pdf.vim'
 <
 
 ==============================================================================
-DEPENDENCY                                                *pdf.vim-dependency*
+DEPENDENCY                                           *open-pdf.vim-dependency*
 
 Conversion from pdf to txt depends on |pdftotext| command. This is one of the
 commands in poppler package. 
@@ -65,7 +65,7 @@ commands in poppler package.
 |unite.vim| is required to show list of cache files.
 
 ==============================================================================
-COMMANDS                                                    *pdf.vim-commands*
+COMMANDS                                               *open-pdf.vim-commands*
 
 :Pdf {path}                            *:Pdf*
     Convert pdf file to txt file and open it. If {file} is opened at first
@@ -78,10 +78,10 @@ COMMANDS                                                    *pdf.vim-commands*
     files have been removed.
 
 ==============================================================================
-VARIABLES                                                  *pdf.vim-variables*
+VARIABLES                                             *open-pdf.vim-variables*
 
 g:pdf_cache_dir
-    String of a path to cache directory which |pdf.vim| uses. If this
+    String of a path to cache directory which |open-pdf.vim| uses. If this
     directory doesn't exist, the directory is made with |mkdir|.
 
     The default value is $HOME.'/vim-pdf.cache'
@@ -92,7 +92,7 @@ g:pdf_open_cmd
     The default value is 'vsplit | view'
 
 ==============================================================================
-SETUP EXAMPLE                                          *pdf.vim-setup-example*
+SETUP EXAMPLE                                     *open-pdf.vim-setup-example*
 
 Write your favorite setting in your vimrc.
 
@@ -103,9 +103,9 @@ Example:
 <
 
 ==============================================================================
-LICENSE                                                      *pdf.vim-license*
+LICENSE                                                 *open-pdf.vim-license*
 
-|pdf.vim| is distributed under MIT license.
+|open-pdf.vim| is distributed under MIT license.
 
   Copyright (c) 2012 rhysd
 
