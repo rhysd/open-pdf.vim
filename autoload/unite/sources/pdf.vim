@@ -29,7 +29,7 @@ endfunction
 
 " action {{{
 let s:my_action_table = {}
-let s:my_action_table.view_pdf = { 'description' : 'view pdf.vim cache file' }
+let s:my_action_table.view_pdf = { 'description' : 'open pdf.vim cache file' }
 
 function! s:my_action_table.view_pdf.func(candidate)
     execute g:pdf_open_cmd.' '.a:candidate.source__file
