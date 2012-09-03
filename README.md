@@ -4,6 +4,9 @@
 
   `:Unite pdf`
 
+`pdftotext` command must be available to convert a pdf file and 
+unite.vim is required to use a unite interface.
+
 Read `doc/open-pdf.txt` to get more information.
 
 TODO:
