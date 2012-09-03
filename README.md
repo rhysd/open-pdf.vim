@@ -4,7 +4,7 @@
 
   `:Unite pdf`
 
-read `doc/open-pdf.txt` to get more information.
+Read `doc/open-pdf.txt` to get more information.
 
 TODO:
 
