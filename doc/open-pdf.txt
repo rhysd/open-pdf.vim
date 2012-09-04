@@ -60,7 +60,7 @@ If you use |neobundle.vim|,
 DEPENDENCY                                           *open-pdf.vim-dependency*
 
 Conversion from pdf to txt depends on |pdftotext| command. This is one of the
-commands in poppler package. 
+commands in poppler package.
 
 |unite.vim| is required to show list of cache files.
 
@@ -68,8 +68,9 @@ commands in poppler package.
 COMMANDS                                               *open-pdf.vim-commands*
 
 :Pdf {path}                            *:Pdf*
-    Convert pdf file to txt file and open it. If {file} is opened at first
-    time, this plugin convert it with |pdftotext| and cache. {path} must be
+    Convert pdf file to txt file and open it. If {file} has been opened at
+    first time, this plugin convert it with |pdftotext| and cache. Conversion
+    is executed asynchronously when |vimproc| is available. {path} must be
     string of path to the pdf file and the extension must be '.pdf'.
 
 :PdfClean [{file}]                     *:PdfClean*
