@@ -100,7 +100,7 @@ Write your favorite setting in your vimrc.
 Example:
 >
   let g:pdf_cache_dir = $HOME.'/.cache/pdf'
-  let g:pdf_open_cmd = 'split | edit'
+  let g:pdf_open_cmd = 'tabnew | view'
 <
 
 ==============================================================================
