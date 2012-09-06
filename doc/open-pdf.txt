@@ -10,6 +10,7 @@ Install           |open-pdf.vim-install|
 Dependency        |open-pdf.vim-dependency|
 Commands          |open-pdf.vim-commands|
 Variables         |open-pdf.vim-variables|
+Unite Action      |open-pdf.vim-unite-action|
 Setup Example     |open-pdf.vim-setup-example|
 License           |open-pdf.vim-license|
 
@@ -91,6 +92,22 @@ g:pdf_open_cmd
     String of a command to open converted files.
 
     The default value is 'vsplit | view'
+
+==============================================================================
+UNITE ACTION                                       *open-pdf.vim-unite-action*
+
+pdf
+    This action is defined in file kind. So, you can choose this action in the
+    unite sources which select and open files. Check |unite-kinds| to know
+    more about unite kinds.
+
+    For example, type a following command,
+>
+    :Unite file
+<
+    and type <Tab>. Then, you find 'pdf' action in candidates. If you do 'pdf'
+    action and candidate is pdf file, the pdf file will open like |:Pdf|
+    command.
 
 ==============================================================================
 SETUP EXAMPLE                                     *open-pdf.vim-setup-example*
