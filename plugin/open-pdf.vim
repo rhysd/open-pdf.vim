@@ -73,3 +73,14 @@ endfunction
 
 command! -complete=file -nargs=1 Pdf call <SID>open_pdf(<q-args>)
 command! -complete=file -nargs=? PdfClean call <SID>clean_cache(<q-args>)
+
+" add action to file source {{{
+if exists('g:unite_abbr_highlight')
+    let s:view_pdf = { 'description' : 'open pdf file' }
+    function! s:view_pdf.func(candidate)
+        call s:open_pdf(a:candidate.action__path)
+    endfunction
+    call unite#custom_action('file', 'pdf', s:view_pdf)
+    unlet s:view_pdf
+endif
+"}}}
