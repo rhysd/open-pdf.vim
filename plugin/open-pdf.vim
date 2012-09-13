@@ -2,25 +2,37 @@ scriptencoding utf-8
 
 let g:pdf_cache_dir = get(g:, 'pdf_cache_dir', $HOME . "/.open-pdf.vim.cache")
 let g:pdf_open_cmd = get(g:, 'pdf_open_cmd', 'vsplit | view')
+let g:pdf_pdftotext_path = get(g:, 'pdf_pdftotext_path', 'pdftotext')
+
+let s:pdf_hooks_default = {}
+function! s:pdf_hooks_default.on_opened()
+    setl nowrap nonumber nolist
+endfunction
+
+let g:pdf_hooks = get(g:, 'pdf_hooks', s:pdf_hooks_default)
 
 if !isdirectory(g:pdf_cache_dir)
     call mkdir(g:pdf_cache_dir, 'p')
 endif
 
-function! s:has_vimproc() "{{{
-    if !exists('s:exists_vimproc')
-        try
-            call vimproc#version()
-            let s:exists_vimproc = 1
-        catch
-            let s:exists_vimproc = 0
-        endtry
-    endif
-    return s:exists_vimproc
+function! s:system(...) "{{{
+    let cmd = join(a:000, ' ')
+    try
+        call vimproc#system(cmd)
+    catch
+        call system(cmd)
+    endtry
 endfunction
 "}}}
 
 function! s:open_pdf(path) "{{{
+
+    " check existence of pdftotext
+    if !executable(g:pdf_pdftotext_path)
+        echoerr "`pdftotext` command is not found!"
+        return
+    endif
+
     " check extension
     if a:path !~ '\.pdf$'
         echoerr a:path." : This is NOT pdf file."
@@ -30,23 +42,16 @@ function! s:open_pdf(path) "{{{
     " get cache name
     let cache = g:pdf_cache_dir.'/'.fnamemodify(a:path,':t:r').'.txt'
 
-    if !executable('pdftotext')
-        echoerr "`pdftotext` command is required!"
-        finish
-    endif
-
     " convert pdf and cache it
     if !filereadable(cache)
-        if s:has_vimproc()
-            call vimproc#system('pdftotext -layout -nopgbrk '.a:path.' - > '.cache)
-        else
-            call system('pdftotext -layout -nopgbrk '.a:path.' - > '.cache)
-        endif
+        echo "converting ".a:path." ..."
+        call s:system(g:pdf_pdftotext_path.' -layout -nopgbrk '.a:path.' - > '.cache)
+        echo "done."
     endif
 
     " open cache file
     execute g:pdf_open_cmd . ' ' . cache
-    setl nowrap nonumber
+    call g:pdf_hooks.on_opened()
 endfunction
 "}}}
 
@@ -74,7 +79,7 @@ endfunction
 command! -complete=file -nargs=1 Pdf call <SID>open_pdf(<q-args>)
 command! -complete=file -nargs=? PdfClean call <SID>clean_cache(<q-args>)
 
-" add action to file source {{{
+" add action to unite file source {{{
 let s:view_pdf = { 'description' : 'open pdf file' }
 
 function! s:view_pdf.func(candidate)

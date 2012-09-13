@@ -10,6 +10,7 @@ Install           |open-pdf.vim-install|
 Dependency        |open-pdf.vim-dependency|
 Commands          |open-pdf.vim-commands|
 Variables         |open-pdf.vim-variables|
+Hooks             |open-pdf.vim-hooks|
 Unite Action      |open-pdf.vim-unite-action|
 Setup Example     |open-pdf.vim-setup-example|
 License           |open-pdf.vim-license|
@@ -82,16 +83,51 @@ COMMANDS                                               *open-pdf.vim-commands*
 ==============================================================================
 VARIABLES                                             *open-pdf.vim-variables*
 
-g:pdf_cache_dir
+g:pdf_cache_dir                        *g:pdf_cache_dir*
     String of a path to cache directory which |open-pdf.vim| uses. If this
     directory doesn't exist, the directory is made with |mkdir|.
 
     The default value is $HOME.'/.open-pdf.vim.cache'
 
-g:pdf_open_cmd
+g:pdf_open_cmd                         *g:pdf_open_cmd*
     String of a command to open converted files.
 
     The default value is 'vsplit | view'
+
+g:pdf_pdftotext_path                   *g:pdf_pdftotext_path*
+    String of a path to pdftotext. If pdftotext doesn't in $PATH, you should
+    set an absolute path to this variable.
+
+    The default value is 'pdftotext' (relative).
+
+    For example, when pdftotext exists in ~/bin
+>
+    let g:pdf_pdftotext_path = expand('~/bin')
+<
+
+g:pdf_hooks                            *g:pdf_hooks*
+    Dictionary of |Funcref|. The key is name of hook and the value is
+    function.
+    See |open-pdf.vim-hooks| to get more information.
+
+==============================================================================
+HOOKS                                                     *open-pdf.vim-hooks*
+
+You can put hook functions in |g:pdf_hooks| dictionary. Now, on_opened hook is
+only available.
+
+on_opened                              *g:pdf_hooks.on_opened*
+    This hook is called after a pdf file has been opened. You can do a pdf file
+    buffer local setting using this hook.
+
+    As a default, |'nowrap'|, |'nonumber'| and |'nolist'| flags are set.
+    Default definition of |g:pdf_hooks.on_opened| is below.
+>
+    let g:pdf_hooks = {}
+    function! g:pdf_hooks.on_opened()
+        setl nowrap nonumber nolist
+    endfunction
+<
 
 ==============================================================================
 UNITE ACTION                                       *open-pdf.vim-unite-action*
