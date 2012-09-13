@@ -95,8 +95,8 @@ g:pdf_open_cmd                         *g:pdf_open_cmd*
     The default value is 'vsplit | view'
 
 g:pdf_pdftotext_path                   *g:pdf_pdftotext_path*
-    String of a path to pdftotext. If pdftotext doesn't in $PATH, you should
-    set an absolute path to this variable.
+    String of a path to pdftotext. If pdftotext doesn't exist in $PATH, you
+    should set an absolute path.
 
     The default value is 'pdftotext' (relative).
 
