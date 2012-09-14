@@ -32,7 +32,8 @@ let s:my_action_table = {}
 let s:my_action_table.view_pdf = { 'description' : 'open pdf.vim cache file' }
 
 function! s:my_action_table.view_pdf.func(candidate)
-    execute ':Pdf' a:candidate.source__file
+    execute g:pdf_open_cmd a:candidate.source__file
+    setl nowrap nonumber
 endfunction
 let s:source.action_table = s:my_action_table
 "}}}
