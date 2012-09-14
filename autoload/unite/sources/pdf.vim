@@ -5,7 +5,7 @@ set cpo&vim
 
 " definition {{{
 let s:source = {
-    \   "name" : "pdf",
+    \   "name" : "pdf/history",
     \   "description" : "list of pdf.vim cache files",
     \   "action_table" : {},
     \   "default_action" : {'common' : 'view_pdf'},
@@ -32,8 +32,7 @@ let s:my_action_table = {}
 let s:my_action_table.view_pdf = { 'description' : 'open pdf.vim cache file' }
 
 function! s:my_action_table.view_pdf.func(candidate)
-    execute g:pdf_open_cmd.' '.a:candidate.source__file
-    setl nowrap nonumber
+    execute ':Pdf' a:candidate.source__file
 endfunction
 let s:source.action_table = s:my_action_table
 "}}}

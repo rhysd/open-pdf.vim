@@ -13,6 +13,7 @@ Auto Conversion   |open-pdf.vim-auto-conversion|
 Variables         |open-pdf.vim-variables|
 Hooks             |open-pdf.vim-hooks|
 Unite Action      |open-pdf.vim-unite-action|
+Unite Source      |open-pdf.vim-unite-source|
 Setup Example     |open-pdf.vim-setup-example|
 License           |open-pdf.vim-license|
 
@@ -35,12 +36,12 @@ USAGE                                                     *open-pdf.vim-usage*
 
   If something goes wrong, you can remove cache.
 >
-  :PdfClean
+  :PdfCacheClean
 <
 
   Select cache with |unite.vim| interface.
 >
-  :Unite pdf
+  :Unite pdf/history
 <
 
 ==============================================================================
@@ -91,7 +92,7 @@ COMMANDS                                               *open-pdf.vim-commands*
     of path to the pdf file and the extension must be '.pdf'.
     |g:pdf_edit_cmd| is used to edit.
 
-:PdfClean [{file}]                     *:PdfClean*
+:PdfCacheClean [{file}]                    *:PdfCacheClean*
     Remove cache file from |g:pdf_cache_dir|.{file} is the pdf name, pdf path
     or cache-name of the pdf file to remove. If {file} omitted, all cache
     files have been removed.
@@ -194,6 +195,16 @@ pdf
     and type <Tab>. Then, you find 'pdf' action in candidates. If you do 'pdf'
     action and candidate is pdf file, the pdf file will open like |:Pdf|
     command.
+
+==============================================================================
+UNITE SOURCE                                       *open-pdf.vim-unite-source*
+
+pdf/history
+    You can choose cache files cached by |open-pdf.vim|.
+
+>
+    :Unite pdf/history
+<
 
 ==============================================================================
 SETUP EXAMPLE                                     *open-pdf.vim-setup-example*

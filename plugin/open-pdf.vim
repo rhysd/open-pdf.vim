@@ -100,10 +100,10 @@ function! s:clean_cache(...) "{{{
 endfunction
 "}}}
 
-command! -complete=file -nargs=1 Pdf      call <SID>open_pdf(<q-args>)
-command! -complete=file -nargs=1 PdfRead  call <SID>read_pdf(<q-args>)
-command! -complete=file -nargs=1 PdfEdit  call <SID>read_pdf(<q-args>)
-command! -complete=file -nargs=? PdfClean call <SID>clean_cache(<q-args>)
+command! -complete=file -nargs=1 Pdf           call <SID>open_pdf(<q-args>)
+command! -complete=file -nargs=1 PdfRead       call <SID>read_pdf(<q-args>)
+command! -complete=file -nargs=1 PdfEdit       call <SID>read_pdf(<q-args>)
+command! -complete=file -nargs=? PdfCacheClean call <SID>clean_cache(<q-args>)
 
 " add action to unite file source {{{
 let s:view_pdf = { 'description' : 'open pdf file' }
