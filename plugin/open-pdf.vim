@@ -1,15 +1,16 @@
 scriptencoding utf-8
 
+" variables {{{
 let g:pdf_cache_dir = get(g:, 'pdf_cache_dir', $HOME . "/.open-pdf.vim.cache")
 let g:pdf_open_cmd = get(g:, 'pdf_open_cmd', 'vsplit | view')
+let g:pdf_edit_cmd = get(g:, 'pdf_read_cmd', 'edit')
+let g:pdf_read_cmd = get(g:, 'pdf_read_cmd', 'read')
 let g:pdf_pdftotext_path = get(g:, 'pdf_pdftotext_path', 'pdftotext')
+let g:pdf_convert_buf_read = get(g:, 'pdf_convert_buf_read', 0)
+let g:pdf_convert_file_read = get(g:, 'pdf_convert_file_read', 0)
 
-let s:pdf_hooks_default = {}
-function! s:pdf_hooks_default.on_opened()
-    setl nowrap nonumber nolist
-endfunction
-
-let g:pdf_hooks = get(g:, 'pdf_hooks', s:pdf_hooks_default)
+let g:pdf_hooks = get(g:, 'pdf_hooks', {})
+"}}}
 
 if !isdirectory(g:pdf_cache_dir)
     call mkdir(g:pdf_cache_dir, 'p')
@@ -25,18 +26,15 @@ function! s:system(...) "{{{
 endfunction
 "}}}
 
-function! s:open_pdf(path) "{{{
-
+function! s:cache(path) "{{{
     " check existence of pdftotext
     if !executable(g:pdf_pdftotext_path)
-        echoerr "`pdftotext` command is not found!"
-        return
+        throw "`pdftotext` command is not found!"
     endif
 
     " check extension
     if a:path !~ '\.pdf$'
-        echoerr a:path." : This is NOT pdf file."
-        return
+        throw a:path." : This is NOT pdf file."
     endif
 
     " get cache name
@@ -49,9 +47,35 @@ function! s:open_pdf(path) "{{{
         echo "done."
     endif
 
+    return cache
+endfunction
+"}}}
+
+function! s:open_pdf(path) "{{{
+
+    let cache_file = s:cache(a:path)
+
     " open cache file
-    execute g:pdf_open_cmd . ' ' . cache
-    call g:pdf_hooks.on_opened()
+    execute g:pdf_open_cmd cache_file
+    if has_key(g:pdf_hooks, 'on_opened')
+        call g:pdf_hooks.on_opened()
+    endif
+endfunction
+"}}}
+
+" read and edit command for pdf file {{{
+function! s:read_pdf(path)
+    execute g:pdf_read_cmd s:cache(a:path)
+    if has_key(g:pdf_hooks, 'on_read')
+        call g:pdf_hooks.on_read()
+    endif
+endfunction
+
+function! s:edit_pdf(path)
+    execute g:pdf_edit_cmd s:cache(a:path)
+    if has_key(g:pdf_hooks, 'on_edited')
+        call g:pdf_hooks.on_edited()
+    endif
 endfunction
 "}}}
 
@@ -76,7 +100,9 @@ function! s:clean_cache(...) "{{{
 endfunction
 "}}}
 
-command! -complete=file -nargs=1 Pdf call <SID>open_pdf(<q-args>)
+command! -complete=file -nargs=1 Pdf      call <SID>open_pdf(<q-args>)
+command! -complete=file -nargs=1 PdfRead  call <SID>read_pdf(<q-args>)
+command! -complete=file -nargs=1 PdfEdit  call <SID>read_pdf(<q-args>)
 command! -complete=file -nargs=? PdfClean call <SID>clean_cache(<q-args>)
 
 " add action to unite file source {{{
@@ -94,4 +120,20 @@ catch
 endtry
 
 unlet s:view_pdf
+"}}}
+
+" auto conversion at BufReadCmd and FileReadCmd {{{
+if g:pdf_convert_buf_read
+    augroup OpenPdfBufRead
+        autocmd!
+        autocmd BufReadCmd *.pdf PdfEdit <afile>
+    augroup END
+endif
+
+if g:pdf_convert_file_read
+    augroup OpenPdfFileRead
+        autocmd!
+        autocmd FileReadCmd *.pdf PdfRead <afile>
+    augroup END
+endif
 "}}}
