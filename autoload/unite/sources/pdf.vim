@@ -29,7 +29,9 @@ endfunction
 
 " action {{{
 let s:my_action_table = {}
-let s:my_action_table.view_pdf = { 'description' : 'open pdf.vim cache file' }
+let s:my_action_table.view_pdf = { 
+            \ 'description' : 'open pdf.vim cache file',
+            \}
 
 function! s:my_action_table.view_pdf.func(candidate)
     execute g:pdf_open_cmd a:candidate.source__file
@@ -38,9 +40,12 @@ function! s:my_action_table.view_pdf.func(candidate)
     endif
 endfunction
 
-let s:my_action_table.delete_pdf = { 'description' : 'delete pdf.vim cache file' }
+let s:my_action_table.delete_pdf = {
+            \ 'description' : 'delete pdf.vim cache file',
+            \ 'is_selectable' : 1,
+            \ }
 function! s:my_action_table.delete_pdf.func(candidate)
-    execute 'PdfCacheClean' a:candidate.source__file
+    execute 'PdfCacheClean '.join(map(a:candidate, 'v:val.source__file'), ' ')
 endfunction
 
 let s:source.action_table = s:my_action_table

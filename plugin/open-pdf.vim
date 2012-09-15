@@ -80,7 +80,11 @@ endfunction
 "}}}
 
 function! s:clean_cache(...) "{{{
-    if empty(a:000) || empty(a:000[0])
+    if empty(a:000)
+        let input = input('Are you sure to delete all caches? [y/N] :')
+        if input !=# 'y'
+            return
+        endif
         " if name omitted, delete all cache
         for path in split(glob(g:pdf_cache_dir.'/*'), '\n')
             call delete(path)
@@ -88,14 +92,17 @@ function! s:clean_cache(...) "{{{
         echo 'deleted: all cache'
     else
         " if name specified
-        let path = g:pdf_cache_dir . '/' . fnamemodify(a:1, ':t:r') . '.txt'
-        if filereadable(path)
-            call delete(path)
-            echo 'deleted: '.path
-        else
-            echo path
-            echo "cache doesn't exist."
-        endif
+        let deleted = []
+        for name in a:000
+            let path = g:pdf_cache_dir . '/' . fnamemodify(name, ':t:r') . '.txt'
+            if filereadable(path)
+                call delete(path)
+                call add(deleted, path)
+            else
+                echoerr "A cache doesn't exist. : " . path
+            endif
+        endfor
+        echo "deleted: ".join(deleted, ', ')
     endif
 endfunction
 "}}}
@@ -103,7 +110,7 @@ endfunction
 command! -complete=file -nargs=1 Pdf           call <SID>open_pdf(<q-args>)
 command! -complete=file -nargs=1 PdfRead       call <SID>read_pdf(<q-args>)
 command! -complete=file -nargs=1 PdfEdit       call <SID>read_pdf(<q-args>)
-command! -complete=file -nargs=? PdfCacheClean call <SID>clean_cache(<q-args>)
+command! -nargs=* PdfCacheClean call <SID>clean_cache(<f-args>)
 
 " add action to unite file source {{{
 let s:view_pdf = { 'description' : 'open pdf file' }
