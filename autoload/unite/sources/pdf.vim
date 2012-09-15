@@ -33,7 +33,9 @@ let s:my_action_table.view_pdf = { 'description' : 'open pdf.vim cache file' }
 
 function! s:my_action_table.view_pdf.func(candidate)
     execute g:pdf_open_cmd a:candidate.source__file
-    setl nowrap nonumber
+    if exists('g:pdf_hooks') && has_key(g:pdf_hooks, 'on_opened')
+        call g:pdf_hooks.on_opened()
+    endif
 endfunction
 
 let s:my_action_table.delete_pdf = { 'description' : 'delete pdf.vim cache file' }
