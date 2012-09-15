@@ -12,9 +12,11 @@ let g:pdf_convert_file_read = get(g:, 'pdf_convert_file_read', 0)
 let g:pdf_hooks = get(g:, 'pdf_hooks', {})
 "}}}
 
+" data dir {{{
 if !isdirectory(g:pdf_cache_dir)
     call mkdir(g:pdf_cache_dir, 'p')
 endif
+"}}}
 
 function! s:system(...) "{{{
     let cmd = join(a:000, ' ')
@@ -26,12 +28,19 @@ function! s:system(...) "{{{
 endfunction
 "}}}
 
-function! s:cache(path) "{{{
+function! s:pdftotext(from,to) "{{{
     " check existence of pdftotext
     if !executable(g:pdf_pdftotext_path)
         throw "`pdftotext` command is not found!"
     endif
 
+    echo "converting ".a:from." ..."
+    call s:system(g:pdf_pdftotext_path.' -layout -nopgbrk '.a:from.' - > '.a:to)
+    echo "done."
+endfunction
+"}}}
+
+function! s:cache(path, bang) "{{{
     " check extension
     if a:path !~ '\.pdf$'
         throw a:path." : This is NOT pdf file."
@@ -41,22 +50,16 @@ function! s:cache(path) "{{{
     let cache = g:pdf_cache_dir.'/'.fnamemodify(a:path,':t:r').'.txt'
 
     " convert pdf and cache it
-    if !filereadable(cache)
-        echo "converting ".a:path." ..."
-        call s:system(g:pdf_pdftotext_path.' -layout -nopgbrk '.a:path.' - > '.cache)
-        echo "done."
+    if !filereadable(cache) || a:bang==#'!'
+        call s:pdftotext(a:path,cache)
     endif
 
     return cache
 endfunction
 "}}}
 
-function! s:open_pdf(path) "{{{
-
-    let cache_file = s:cache(a:path)
-
-    " open cache file
-    execute g:pdf_open_cmd cache_file
+function! s:open_pdf(path, bang) "{{{
+    execute g:pdf_open_cmd s:cache(a:path,a:bang)
     if has_key(g:pdf_hooks, 'on_opened')
         call g:pdf_hooks.on_opened()
     endif
@@ -64,15 +67,15 @@ endfunction
 "}}}
 
 " read and edit command for pdf file {{{
-function! s:read_pdf(path)
-    execute g:pdf_read_cmd s:cache(a:path)
+function! s:read_pdf(path, bang)
+    execute g:pdf_read_cmd s:cache(a:path,a:bang)
     if has_key(g:pdf_hooks, 'on_read')
         call g:pdf_hooks.on_read()
     endif
 endfunction
 
-function! s:edit_pdf(path)
-    execute g:pdf_edit_cmd s:cache(a:path)
+function! s:edit_pdf(path, bang)
+    execute g:pdf_edit_cmd s:cache(a:path,a:bang)
     if has_key(g:pdf_hooks, 'on_edited')
         call g:pdf_hooks.on_edited()
     endif
@@ -107,10 +110,21 @@ function! s:clean_cache(...) "{{{
 endfunction
 "}}}
 
-command! -complete=file -nargs=1 Pdf           call <SID>open_pdf(<q-args>)
-command! -complete=file -nargs=1 PdfRead       call <SID>read_pdf(<q-args>)
-command! -complete=file -nargs=1 PdfEdit       call <SID>read_pdf(<q-args>)
-command! -nargs=* PdfCacheClean call <SID>clean_cache(<f-args>)
+function! s:reload_cache(...) "{{{
+    for path in a:000
+        let cache = g:pdf_cache_dir.'/'.fnamemodify(path,':t:r').'.txt'
+        call s:pdftotext(path,cache)
+    endfor
+endfunction
+"}}}
+
+" commands "{{{
+command! -complete=file -nargs=1 -bar -bang Pdf            call <SID>open_pdf(<q-args>, <q-bang>)
+command! -complete=file -nargs=1 -bar -bang PdfRead        call <SID>read_pdf(<q-args>, <q-bang>)
+command! -complete=file -nargs=1 -bar -bang PdfEdit        call <SID>read_pdf(<q-args>, <q-bang>)
+command! -nargs=*                           PdfCacheClean  call <SID>clean_cache(<f-args>)
+command! -complete=file -nargs=+            PdfCacheReload call <SID>reload_cache(<f-args>)
+"}}}
 
 " add action to unite file source {{{
 let s:view_pdf = { 'description' : 'open pdf file' }

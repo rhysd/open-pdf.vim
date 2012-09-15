@@ -71,31 +71,38 @@ commands in poppler package.
 ==============================================================================
 COMMANDS                                               *open-pdf.vim-commands*
 
-:Pdf {path}                            *:Pdf*
+:Pdf[!] {path}                            *:Pdf*
     Convert pdf file to txt file and open it with read only. If {file} has
     been opened at first time, this plugin convert it with |pdftotext| and
     cache it. Conversion is executed with |vimproc| if available. {path} must
-    be string of path to the pdf file and the extension must be '.pdf'.
+    be string of path to the pdf file and the extension must be '.pdf'. When
+    [!] is included, the conversion is always executed.
     |g:pdf_open_cmd| is used to open.
 
-:PdfRead {path}                        *:PdfRead*
+:PdfRead[!] {path}                        *:PdfRead*
     Convert pdf file to txt file and read it to a buffer. If {file} has been
     specified at first time, this plugin convert it with |pdftotext| and cache
     it.  Conversion is executed with |vimproc| if available. {path} must be
-    string of path to the pdf file and the extension must be '.pdf'.
+    string of path to the pdf file and the extension must be '.pdf'. When [!]
+    is included, the conversion is always executed.
     |g:pdf_read_cmd| is used to read.
 
-:PdfEdit {path}                            *:PdfEdit*
+:PdfEdit[!] {path}                        *:PdfEdit*
     Convert pdf file to txt file and open it to edit. If {file} has been
-    opened at first time, this plugin convert it with |pdftotext| and cache it.
+    opened at first time,this plugin convert it with |pdftotext| and cache it.
     Conversion is executed with |vimproc| if available. {path} must be string
-    of path to the pdf file and the extension must be '.pdf'.
+    of path to the pdf file and the extension must be '.pdf'.  When [!] is
+    included, the conversion is always executed.
     |g:pdf_edit_cmd| is used to edit.
 
-:PdfCacheClean [{file}]                    *:PdfCacheClean*
-    Remove cache file from |g:pdf_cache_dir|.{file} is the pdf name, pdf path
+:PdfCacheClean [{files}]                  *:PdfCacheClean*
+    Remove cache file from |g:pdf_cache_dir|. {file} is the pdf name, pdf path
     or cache-name of the pdf file to remove. If {file} omitted, all cache
     files have been removed.
+
+:PdfCacheReload {files}                   *:PdfCacheReload*
+    Reconvert cache file from |g:pdf_cache_dir|. {file} is the pdf name, pdf
+    path or cache-name of the pdf file to reconvert.
 
 ==============================================================================
 AUTO CONVERSION                                 *open-pdf.vim-auto-conversion*
@@ -205,6 +212,15 @@ pdf/history
 >
     :Unite pdf/history
 <
+
+    In this source, below actions are available.
+
+    - *view_pdf*
+    - *delete_pdf*
+    - *reload_pdf*
+
+    Please see the description of these actions to get more information.
+    Default action is |view_pdf|.
 
 ==============================================================================
 SETUP EXAMPLE                                     *open-pdf.vim-setup-example*

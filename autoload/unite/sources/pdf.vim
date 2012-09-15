@@ -27,10 +27,10 @@ function! s:source.gather_candidates(args,context)
 endfunction
 "}}}
 
-" action {{{
+" actions {{{
 let s:my_action_table = {}
 let s:my_action_table.view_pdf = { 
-            \ 'description' : 'open pdf.vim cache file',
+            \ 'description' : 'open open-pdf.vim cache file',
             \}
 
 function! s:my_action_table.view_pdf.func(candidate)
@@ -41,11 +41,19 @@ function! s:my_action_table.view_pdf.func(candidate)
 endfunction
 
 let s:my_action_table.delete_pdf = {
-            \ 'description' : 'delete pdf.vim cache file',
+            \ 'description' : 'delete open-pdf.vim cache file',
             \ 'is_selectable' : 1,
             \ }
 function! s:my_action_table.delete_pdf.func(candidate)
     execute 'PdfCacheClean '.join(map(a:candidate, 'v:val.source__file'), ' ')
+endfunction
+
+let s:my_action_table.reload_pdf = {
+            \ 'description' : 'reconvert open-pdf.vim cache file',
+            \ 'is_selectable' : 1,
+            \ }
+function! s:my_action_table.reload_pdf.func(candidate)
+    execute 'PdfCacheReload '.join(map(a:candidate, 'v:val.source__file'), ' ')
 endfunction
 
 let s:source.action_table = s:my_action_table
