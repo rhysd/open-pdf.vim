@@ -63,10 +63,30 @@ If you use |neobundle.vim|,
 ==============================================================================
 DEPENDENCY                                           *open-pdf.vim-dependency*
 
-Conversion from pdf to txt depends on |pdftotext| command. This is one of the
-commands in poppler package.
+Conversion from pdf to txt depends on |pdftotext| command. You must install
+this before using this plugin. This is one of the commands in poppler package.
 
-|unite.vim| is required to show list of cache files.
+Using Apt package manager in some Linux distributions,
+>
+  sudo aptitude install poppler-utils
+<
+
+Using Homebrew in MacOS X,
+>
+  brew install poppler
+<
+
+Using ports in FreeBSD,
+>
+  sudo portinstall graphics/xpdf
+<
+
+In Windows, build poppler source in MinGW or install XPdf which includes
+|pdftotext| command.
+
+
+Additional, |unite.vim| is optional to show list of cache files in unite
+interface.
 
 ==============================================================================
 COMMANDS                                               *open-pdf.vim-commands*
