@@ -6,8 +6,8 @@ let g:pdf_open_cmd = get(g:, 'pdf_open_cmd', 'vsplit | view')
 let g:pdf_edit_cmd = get(g:, 'pdf_read_cmd', 'edit')
 let g:pdf_read_cmd = get(g:, 'pdf_read_cmd', 'read')
 let g:pdf_pdftotext_path = get(g:, 'pdf_pdftotext_path', 'pdftotext')
-let g:pdf_convert_buf_read = get(g:, 'pdf_convert_buf_read', 0)
-let g:pdf_convert_file_read = get(g:, 'pdf_convert_file_read', 0)
+let g:pdf_convert_on_edit = get(g:, 'pdf_convert_on_edit', 0)
+let g:pdf_convert_on_read = get(g:, 'pdf_convert_on_read', 0)
 
 let g:pdf_hooks = get(g:, 'pdf_hooks', {})
 "}}}
@@ -144,14 +144,14 @@ unlet s:view_pdf
 "}}}
 
 " auto conversion at BufReadCmd and FileReadCmd {{{
-if g:pdf_convert_buf_read
+if g:pdf_convert_on_edit
     augroup OpenPdfBufRead
         autocmd!
         autocmd BufReadCmd *.pdf PdfEdit <afile>
     augroup END
 endif
 
-if g:pdf_convert_file_read
+if g:pdf_convert_on_read
     augroup OpenPdfFileRead
         autocmd!
         autocmd FileReadCmd *.pdf PdfRead <afile>

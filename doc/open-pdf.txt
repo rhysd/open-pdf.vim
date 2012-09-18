@@ -110,9 +110,9 @@ AUTO CONVERSION                                 *open-pdf.vim-auto-conversion*
 When a pdf file is loaded by , for example, |:edit| or |:read| and so on,
 |open-pdf.vim| converts it automatically before read it to the buffer.
 
-If you want to make these features enable, set |g:pdf_convert_buf_read| and
-|g:pdf_convert_file_read| to 1. When you |:edit| a pdf file, |:PdfEdit| is
-used instead of a original |:edit| command. And, when you |:read| a pdf file,
+If you want to make these features enable, set |g:pdf_convert_on_edit| and
+|g:pdf_convert_on_read| to 1. When you |:edit| a pdf file, |:PdfEdit| is used
+instead of a original |:edit| command. And, when you |:read| a pdf file,
 |:PdfRead| is used instead of a original |:read| command.
 
 ==============================================================================
@@ -153,14 +153,14 @@ g:pdf_pdftotext_path                   *g:pdf_pdftotext_path*
     let g:pdf_pdftotext_path = expand('~/bin')
 <
 
-g:pdf_convert_buf_read                 *g:pdf_convert_buf_read*
+g:pdf_convert_on_edit                  *g:pdf_convert_on_edit*
     If the value equals 1, conversion from pdf to txt is executed at
     |BufReadCmd| event. You can pdf file in plain-text format even if you type
     |:edit| command.
 
     The default value is 0.
 
-g:pdf_convert_file_read                *g:pdf_convert_file_read*
+g:pdf_convert_on_read                  *g:pdf_convert_on_read*
     If the value equals 1, conversion from pdf to txt is executed at
     |FileReadCmd| event. You can pdf file in plain-text format even if you
     type |:read| command.
@@ -216,7 +216,7 @@ pdf/history
     In this source, below actions are available.
 
     - *view_pdf*
-    - *delete_pdf*
+    - *delete_pdf_cache*
     - *reload_pdf*
 
     Please see the description of these actions to get more information.
@@ -234,8 +234,8 @@ Example:
   " open with tab
   let g:pdf_open_cmd = 'tabnew | view'
   " auto conversion at :edit and :read
-  let g:pdf_convert_buf_read = 1
-  let g:pdf_convert_file_read = 1
+  let g:pdf_convert_on_edit = 1
+  let g:pdf_convert_on_read = 1
 
   if !exists('g:pdf_hooks')
     let g:pdf_hooks = {}

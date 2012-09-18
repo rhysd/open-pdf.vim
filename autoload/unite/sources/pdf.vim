@@ -40,11 +40,11 @@ function! s:my_action_table.view_pdf.func(candidate)
     endif
 endfunction
 
-let s:my_action_table.delete_pdf = {
+let s:my_action_table.delete_pdf_cache = {
             \ 'description' : 'delete open-pdf.vim cache file',
             \ 'is_selectable' : 1,
             \ }
-function! s:my_action_table.delete_pdf.func(candidate)
+function! s:my_action_table.delete_pdf_cache.func(candidate)
     execute 'PdfCacheClean '.join(map(a:candidate, 'v:val.source__file'), ' ')
 endfunction
 
