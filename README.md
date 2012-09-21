@@ -4,10 +4,10 @@ Convert pdf file to plain-text file, cache it and open it in Vim.
 ### Commands
 - `:Pdf path/to/pdf-file` converts, caches and opens the pdf-file.
 
-- `:Unite pdf` displays histories you have ever opened.
+- `:Unite pdf/history` displays histories you have ever opened.
 
 ### Dependency
-`pdftotext` command must be available to convert a pdf file and 
+`pdftotext` command must have been installed in advance to convert a pdf file and 
 unite.vim is required to use a unite interface.
 
 ### Auto Conversion
