@@ -20,11 +20,11 @@ License           |open-pdf.vim-license|
 ==============================================================================
 INTRODUCTION                                       *open-pdf.vim-introduction*
 
-*open-pdf.vim* is plugin to open pdf files in vim. This plugin enables to access
-pdf files and yank in the files quickly. Conversion from pdf to txt takes
-seconds, however, the conversion only occurs at first time because this plugin
-cache txt files. If you use |unite.vim|, you can access the cache files using
-unite interface.
+*open-pdf.vim* is plugin to open pdf files in vim. This plugin enables to
+access pdf files and yank in the files quickly. Conversion from pdf to txt
+takes seconds, however, the conversion only occurs at first time because this
+plugin cache txt files. If you use |unite.vim|, you can access the cache files
+using unite interface.
 
 ==============================================================================
 USAGE                                                     *open-pdf.vim-usage*
