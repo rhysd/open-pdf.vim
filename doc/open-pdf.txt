@@ -197,6 +197,10 @@ g:unite_pdf_search_cmd                 *g:unite_pdf_search_cmd*
     string, pdf/search source uses a default command.
     The default value is ''.
 
+    For example, if you want to use /usr/local/bin/locate, write as below.
+>
+    let g:unite_pdf_search_cmd = '/usr/local/bin/locate -l 30 "*%s*.pdf"'
+<
     See also: |unite-source-pdf/search|
 
 ==============================================================================

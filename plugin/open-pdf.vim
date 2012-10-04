@@ -19,11 +19,16 @@ endif
 
 function! s:system(...) "{{{
     let cmd = join(a:000, ' ')
-    try
-        call vimproc#system(cmd)
-    catch
+    if exists('s:vimproc_does_not_exist')
         call system(cmd)
-    endtry
+    else
+        try
+            call vimproc#system(cmd)
+        catch
+            let s:vimproc_does_not_exist = 1
+            call system(cmd)
+        endtry
+    endif
 endfunction
 "}}}
 

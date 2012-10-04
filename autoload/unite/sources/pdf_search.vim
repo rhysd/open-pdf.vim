@@ -20,7 +20,7 @@ endfunction
 let s:cmd = get(g:, 'unite_pdf_search_cmd', '')
 if empty(s:cmd)
     if has('mac')
-        let s:cmd = 'mdfind *%s*.pdf'
+        let s:cmd = "mdfind -name 'kMDItemFSName == \"*%s*.pdf\"'c"
     elseif has('unix') && executable('locate')
         echo s:source.max_candidates
         let s:cmd = 'locate -l '
