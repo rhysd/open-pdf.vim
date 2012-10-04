@@ -192,6 +192,13 @@ g:pdf_hooks                            *g:pdf_hooks*
     function.
     See |open-pdf.vim-hooks| to get more information.
 
+g:unite_pdf_search_cmd                 *g:unite_pdf_search_cmd*
+    Command to search in pdf/search unite source. It this variable is empty
+    string, pdf/search source uses a default command.
+    The default value is ''.
+
+    See also: |unite-source-pdf/search|
+
 ==============================================================================
 HOOKS                                                     *open-pdf.vim-hooks*
 
@@ -226,7 +233,7 @@ pdf
 ==============================================================================
 UNITE SOURCE                                       *open-pdf.vim-unite-source*
 
-pdf/history
+pdf/history                            *unite-source-pdf/history*
     You can choose cache files cached by |open-pdf.vim|.
 
 >
@@ -241,6 +248,17 @@ pdf/history
 
     Please see the description of these actions to get more information.
     Default action is |view_pdf|.
+
+pdf/search                             *unite-source-pdf/search*
+    This source searches pdf file in your filesystem with
+    |g:unite_pdf_search_cmd|.  If |g:unite_pdf_search_cmd| is omitted, a
+    command for search depends on your platform.
+
+    When MacOS,   'mdfind *%s*.pdf' is used.
+    When *nix,    'locate -l {max_candidates} "*%s*.pdf"' is used.
+    When Windows, 'es -i -r -n {max_candidates} %s.pdf' is used.
+
+    In these strings, '%s' means input value by |unite.vim|.
 
 ==============================================================================
 SETUP EXAMPLE                                     *open-pdf.vim-setup-example*

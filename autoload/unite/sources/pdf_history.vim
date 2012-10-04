@@ -11,7 +11,7 @@ let s:source = {
     \   "default_action" : {'common' : 'view_pdf'},
     \}
 
-function! unite#sources#pdf#define()
+function! unite#sources#pdf_history#define()
     return s:source
 endfunction
 "}}}
