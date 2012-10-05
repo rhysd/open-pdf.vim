@@ -25,11 +25,11 @@ command! -nargs=*                           PdfCacheClean  call open_pdf#clean_c
 command! -complete=file -nargs=+            PdfCacheReload call open_pdf#reload_cache(<f-args>)
 "}}}
 
-" add action to unite file source {{{
+" add an action to unite file source {{{
 let s:view_pdf = { 'description' : 'open pdf file' }
 
 function! s:view_pdf.func(candidate)
-    call open_pdf#open(a:candidate.action__path)
+    call open_pdf#open(a:candidate.action__path, '')
 endfunction
 
 " :call fails when unite doesn't exist.

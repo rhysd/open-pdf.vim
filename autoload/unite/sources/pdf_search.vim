@@ -7,6 +7,7 @@ set cpo&vim
 let s:source = {
     \   "name"        : "pdf/search",
     \   "description" : "search pdf files",
+    \   "default_action" : 'pdf',
     \   "max_candidates" : 30,
     \   "is_volatile" : 1,
     \}
