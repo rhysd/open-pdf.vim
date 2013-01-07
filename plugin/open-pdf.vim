@@ -1,5 +1,10 @@
 scriptencoding utf-8
 
+" load once
+if exists("g:loaded_open_pdf")
+    finish
+endif
+
 " variables {{{
 let g:pdf_cache_dir       = get(g:, 'pdf_cache_dir', $HOME . "/.open-pdf.vim.cache")
 let g:pdf_open_cmd        = get(g:, 'pdf_open_cmd', 'vsplit | view')
@@ -57,3 +62,5 @@ if g:pdf_convert_on_read
     augroup END
 endif
 "}}}
+
+let g:loaded_open_pdf = 1
