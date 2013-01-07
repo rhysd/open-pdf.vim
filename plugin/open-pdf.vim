@@ -30,11 +30,12 @@ command! -nargs=*                           PdfCacheClean  call open_pdf#clean_c
 command! -complete=file -nargs=+            PdfCacheReload call open_pdf#reload_cache(<f-args>)
 "}}}
 
-" add unite action to open pdf when unite.vim is used
+" add unite action to open pdf when unite.vim is used {{{
 augroup OpenPdfUniteAction
     autocmd!
-    autocmd FileType unite,vimfiler call open_pdf#add_unite_action()
+    autocmd FileType unite,vimfiler call open_pdf#unite_action_pdf#add()
 augroup END
+"}}}
 
 " auto conversion at BufReadCmd and FileReadCmd {{{
 if g:pdf_convert_on_edit

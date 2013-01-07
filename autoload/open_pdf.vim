@@ -104,19 +104,3 @@ function! open_pdf#reload_cache(...) "{{{
     endfor
 endfunction
 "}}}
-
-function! open_pdf#add_unite_action() " {{{
-    let view_pdf = { 'description' : 'open pdf file' }
-
-    function! view_pdf.func(candidate)
-        call open_pdf#open(a:candidate.action__path, '')
-    endfunction
-
-    " :call fails when unite doesn't exist.
-    try
-        call unite#custom_action('file', 'pdf', deepcopy(view_pdf))
-    catch
-        " skip throwing exception.
-    endtry
-endfunction
-"}}}
