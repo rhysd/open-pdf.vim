@@ -46,7 +46,7 @@ endfunction
 "}}}
 
 function! open_pdf#open(path, bang) "{{{
-    execute g:pdf_open_cmd s:cache(a:path,a:bang)
+    execute g:pdf_open_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_opened')
         call g:pdf_hooks.on_opened()
     endif
@@ -55,14 +55,14 @@ endfunction
 
 " read and edit command for pdf file {{{
 function! open_pdf#read(path, bang)
-    execute g:pdf_read_cmd s:cache(a:path,a:bang)
+    execute g:pdf_read_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_read')
         call g:pdf_hooks.on_read()
     endif
 endfunction
 
 function! open_pdf#edit(path, bang)
-    execute g:pdf_edit_cmd s:cache(a:path,a:bang)
+    execute g:pdf_edit_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_edited')
         call g:pdf_hooks.on_edited()
     endif
